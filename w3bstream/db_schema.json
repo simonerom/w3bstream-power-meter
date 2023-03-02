@@ -1,0 +1,51 @@
+{
+    "tables": [
+      {
+        "name": "measurements",
+        "cols": [
+          {
+            "name": "device_id",
+            "constrains": {
+              "datatype": "TEXT",
+              "length": 130,
+              "desc": "device id"
+            }
+          },
+          {
+            "name": "recipient_address",
+            "constrains": {
+              "datatype": "TEXT",
+              "length": 40,
+              "desc": "user wallet address"
+            }
+          },
+          {
+            "name": "data_timestamp",
+            "constrains": {
+              "datatype": "UINT64",
+              "desc": "sample time"
+            }
+          },
+          {
+            "name": "sensor_reading",
+            "constrains": {
+              "datatype": "FLOAT32",
+              "desc": "energy sample"
+            }
+          }
+        ],
+        "keys":[
+          {
+              "name": "recipient_address",
+              "isUnique": true,
+              "columnNames": [
+                "recipient_address"
+              ]
+            }
+        ],
+        "withSoftDeletion": true,
+        "withPrimaryKey": true
+      }
+    ]
+  }
+  
