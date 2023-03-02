@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+  },
+  "extends": "assemblyscript/std/assembly.json",
+  "include": [
+    "./**/*.ts"
+  ]
+}

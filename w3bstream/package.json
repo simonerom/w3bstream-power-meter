@@ -1,0 +1,32 @@
+{
+  "name": "energy-meter",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "node tests",
+    "asbuild:release": "asc assembly/index.ts --use abort=assembly/index/abort --target release",
+    "asbuild": "npm run asbuild:release",
+    "start": "npx serve ."
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "assemblyscript": "^0.27.0",
+    "hardhat": "^2.12.7"
+  },
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./build/release.js",
+      "types": "./build/release.d.ts"
+    }
+  },
+  "dependencies": {
+    "@w3bstream/wasm-sdk": "^0.3.0"
+  },
+  "directories": {
+    "test": "tests"
+  },
+  "description": ""
+}
