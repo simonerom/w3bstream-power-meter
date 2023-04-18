@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@nick-iotex/w3bstream-http-client-simulator": "^1.2.0"
+    "@nick-iotex/w3bstream-http-client-simulator": "^1.2.0",
+    "typescript": "^5.0.4"
   }
 }
