@@ -1,6 +1,13 @@
-import { Log, GetDataByRID, GetEnv, SendTx, JSON } from "@w3bstream/wasm-sdk";
-import { Int32 } from "@w3bstream/wasm-sdk/assembly/sql";
+import { Log, GetDataByRID, GetEnv, SendTx, JSON, ExecSQL } from "@w3bstream/wasm-sdk";
+import { Bool, Float64, Int32, Int64, String, Time } from "@w3bstream/wasm-sdk/assembly/sql";
 export { alloc } from "@w3bstream/wasm-sdk";
+
+/*
+  "data": {
+    "sensor_reading": 1.5,
+    "timestamp": 1620000000
+  }
+*/
 
 function mintRewards(
   tokenContract: string,
@@ -26,16 +33,29 @@ export function start(rid: i32): i32 {
   let payloadStr = GetDataByRID(rid);
   Log("payload: " + payloadStr);
 
-  const TokenContractAddress = GetEnv("TokenContractAddress");
+  // const TokenContractAddress = GetEnv("TokenContractAddress");
+  const TokenContractAddress = "0x0da8d9FBb86120f74af886265c51b98B1BeAE395";
   Log("TokenContractAddress: " + TokenContractAddress);
 
-  const RecipientAddress = GetEnv("RecipientAddress");
+  //const RecipientAddress = GetEnv("RecipientAddress");
+  const RecipientAddress = "0x2C37a2cBcFacCdD0625b4E3151d6260149eE866B"
   Log("RecipientAddress: " + RecipientAddress);
 
   let payload: JSON.Obj = JSON.parse(payloadStr) as JSON.Obj;
   let data: JSON.Obj = payload.getObj("data") as JSON.Obj;
+  Log("data: " + data.toString());
+
   const reading: JSON.Float | null = data.getFloat("sensor_reading");
   const timestamp: JSON.Integer | null = data.getInteger("timestamp");
+  const device_pub_key: JSON.Str | null = payload.getString("public_key");
+
+  if (device_pub_key == null) {
+    Log("Missing device public key, ignoring this data point.");
+    return 1;
+  }
+  let devicePubKeyValue: string = device_pub_key.valueOf();
+  Log("device_pub_key: " + devicePubKeyValue);
+
 
   if (reading == null) {
     Log("sensor reading is null, ignoring this data point.");
@@ -45,12 +65,18 @@ export function start(rid: i32): i32 {
     return 1;
   }
 
-  let readingValue = reading.valueOf();
-  let timestampValue = timestamp.valueOf();
+  let readingValue: f64 = reading.valueOf();
+  let timestampValue: i64 = timestamp.valueOf();
 
   Log("sensor reading: " + readingValue.toString());
   Log("timestamp: " + timestampValue.toString());
 
+  // Insert data into database
+  Log("Inserting data into database...");
+  const value = ExecSQL(
+    `INSERT INTO "sensor_data" (device_id,timestamp,sensor_reading) VALUES (?,?,?);`, 
+    [new String(devicePubKeyValue), new Time(timestampValue.toString()), new Int64(10000), new Float64(readingValue)]);
+  
   // If using less than 2Wh, mint 1 token to the recipient
   if (readingValue <= 2) {
     Log("Minting 10 token to recipient...");
@@ -64,22 +90,3 @@ export function start(rid: i32): i32 {
     return 0;
 }
 
-export function abort(
-  message: string | null,
-  fileName: string | null,
-  lineNumber: u32,
-  columnNumber: u32
-): void {
-  if (message == null) message = "unknown error";
-  if (fileName == null) fileName = "unknown file";
-  Log(
-    "ABORT: " +
-      message +
-      " at " +
-      fileName +
-      ":" +
-      lineNumber.toString() +
-      ":" +
-      columnNumber.toString()
-  );
-}

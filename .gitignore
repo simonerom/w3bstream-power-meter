@@ -10,3 +10,8 @@ raw/
 cli/index.generated.js
 src/diagnosticMessages.generated.ts
 coverage/
+blockchain/cache/
+artifacts/
+.env
+private.key
+cache/
