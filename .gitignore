@@ -13,5 +13,5 @@ coverage/
 blockchain/cache/
 artifacts/
 .env
-private.key
+*.key
 cache/
