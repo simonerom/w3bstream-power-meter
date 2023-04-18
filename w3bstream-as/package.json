@@ -13,7 +13,7 @@
   "license": "ISC",
   "devDependencies": {
     "assemblyscript": "^0.27.0",
-    "hardhat": "^2.12.7"
+    "@w3bstream/wasm-sdk": "^0.4.0"
   },
   "type": "module",
   "exports": {
@@ -25,8 +25,5 @@
   "directories": {
     "test": "tests"
   },
-  "description": "",
-  "dependencies": {
-    "@w3bstream/wasm-sdk": "^0.4.0"
-  }
+  "description": ""
 }
