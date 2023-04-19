@@ -1,7 +1,0 @@
-{"@lv":"info","@prj":"srv-applet-mgr","@ts":"20230215-122622.375Z","event_type":"ANY","msg":"matched strategies: 1","project_name":"project_01"}
-{"@lv":"info","@prj":"srv-applet-mgr","@ts":"20230215-122622.376Z","msg":"","subject":"HandleEvent","task_id":"HandleEvent::9221131289817153544::"}
-{"@app":"app_01","@lv":"info","@prj":"srv-applet-mgr","@src":"wasm","@ts":"20230215-122622.383Z","msg":"reportEnergyConsumption function called"}
-{"@app":"app_01","@lv":"info","@prj":"srv-applet-mgr","@src":"wasm","@ts":"20230215-122622.385Z","msg":"data: [object Object]"}
-{"@app":"app_01","@lv":"info","@prj":"srv-applet-mgr","@src":"wasm","@ts":"20230215-122622.386Z","msg":"ABORT: get env failed: key: TokenContractAddress addr: 43104 at ~lib/@w3bstream/wasm-sdk/assembly/sdk.ts:111:5"}
-{"@lv":"error","@prj":"srv-applet-mgr","@ts":"20230215-122622.388Z","msg":"wasm trap: wasm `unreachable` instruction executed\nwasm backtrace:\n    0: 0x5535 - \u003cunknown\u003e!\u003cwasm function 72\u003e\n"}
-{"@agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.2 Safari/605.1.15","@cst":23,"@lv":"info","@mtd":"POS","@prj":"srv-applet-mgr","@rmt":"192.168.32.2","@status":201,"@tag":"access","@ts":"20230215-122622.394Z","@url":"/srv-applet-mgr/v0/event/project_01","msg":""}

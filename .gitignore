@@ -15,3 +15,5 @@ artifacts/
 .env
 *.key
 cache/
+log.*
+.DS_Store

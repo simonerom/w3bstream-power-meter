@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "node tests",
+    "test": "asp --verbose",
     "asbuild:release": "asc assembly/index.ts --target release",
     "asbuild": "npm run asbuild:release",
     "start": "npx serve ."
@@ -12,8 +12,9 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "assemblyscript": "^0.27.0",
-    "hardhat": "^2.12.7"
+    "@as-pect/cli": "^8.1.0",
+    "@w3bstream/wasm-sdk": "^0.4.0",
+    "assemblyscript": "^0.27.0"
   },
   "type": "module",
   "exports": {
@@ -25,8 +26,5 @@
   "directories": {
     "test": "tests"
   },
-  "description": "",
-  "dependencies": {
-    "@w3bstream/wasm-sdk": "^0.4.0"
-  }
+  "description": ""
 }
