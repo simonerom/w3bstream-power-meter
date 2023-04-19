@@ -3,9 +3,8 @@
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
+    "strictBindCallApply": false
   },
   "extends": "assemblyscript/std/assembly.json",
-  "include": [
-    "./**/*.ts"
-  ]
+  "include": ["./**/*.ts"]
 }
