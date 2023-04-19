@@ -3,12 +3,14 @@ import { Float64, Int64, String, Time } from "@w3bstream/wasm-sdk/assembly/sql";
 
 export { alloc } from "@w3bstream/wasm-sdk";
 
+import { tokenNumberToHex } from "./utils/wei-to-hex";
+
 export function mintRewards(
   tokenContract: string,
   recipient: string,
-  amountHexStr: string
+  tokenAmount: string
 ): void {
-  const amountStr = "0".repeat(64 - amountHexStr.length) + amountHexStr;
+  const amountStr = tokenNumberToHex(tokenAmount);
   const recipientStr = recipient.replace("0x", "");
   const data: string = `0x40c10f19000000000000000000000000${recipientStr}${amountStr}`;
   Log("Sending tx data: " + data);
@@ -79,10 +81,10 @@ export function start(rid: i32): i32 {
   // If using less than 2Wh, mint 1 token to the recipient
   if (readingValue <= 2) {
     Log("Minting 10 token to recipient...");
-    mintRewards(TokenContractAddress, RecipientAddress, "8AC7230489E80000");
+    mintRewards(TokenContractAddress, RecipientAddress, "10");
   } else if (readingValue <= 5) {
     Log("Minting 4 token to recipient...");
-    mintRewards(TokenContractAddress, RecipientAddress, "3782DACE9D900000");
+    mintRewards(TokenContractAddress, RecipientAddress, "4");
   } else {
     Log("Consumption too high, no rewards deserved.");
   }
