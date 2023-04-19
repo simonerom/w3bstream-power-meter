@@ -1,23 +1,17 @@
-import { Log, GetDataByRID, GetEnv, SendTx, JSON, ExecSQL } from "@w3bstream/wasm-sdk";
-import { Bool, Float64, Int32, Int64, String, Time } from "@w3bstream/wasm-sdk/assembly/sql";
+import { Log, GetDataByRID, SendTx, JSON, ExecSQL } from "@w3bstream/wasm-sdk";
+import { Float64, Int64, String, Time } from "@w3bstream/wasm-sdk/assembly/sql";
+
 export { alloc } from "@w3bstream/wasm-sdk";
 
-/*
-  "data": {
-    "sensor_reading": 1.5,
-    "timestamp": 1620000000
-  }
-*/
-
-function mintRewards(
+export function mintRewards(
   tokenContract: string,
   recipient: string,
   amountHexStr: string
 ): void {
   const amountStr = "0".repeat(64 - amountHexStr.length) + amountHexStr;
-  const recipientStr = recipient.replace("0x","");
+  const recipientStr = recipient.replace("0x", "");
   const data: string = `0x40c10f19000000000000000000000000${recipientStr}${amountStr}`;
-  Log("Sending tx data: "+ data);
+  Log("Sending tx data: " + data);
   const res = SendTx(
     4690,
     tokenContract,
@@ -38,7 +32,7 @@ export function start(rid: i32): i32 {
   Log("TokenContractAddress: " + TokenContractAddress);
 
   //const RecipientAddress = GetEnv("RecipientAddress");
-  const RecipientAddress = "0x2C37a2cBcFacCdD0625b4E3151d6260149eE866B"
+  const RecipientAddress = "0x2C37a2cBcFacCdD0625b4E3151d6260149eE866B";
   Log("RecipientAddress: " + RecipientAddress);
 
   let payload: JSON.Obj = JSON.parse(payloadStr) as JSON.Obj;
@@ -55,7 +49,6 @@ export function start(rid: i32): i32 {
   }
   let devicePubKeyValue: string = device_pub_key.valueOf();
   Log("device_pub_key: " + devicePubKeyValue);
-
 
   if (reading == null) {
     Log("sensor reading is null, ignoring this data point.");
@@ -74,19 +67,24 @@ export function start(rid: i32): i32 {
   // Insert data into database
   Log("Inserting data into database...");
   const value = ExecSQL(
-    `INSERT INTO "sensor_data" (device_id,timestamp,sensor_reading) VALUES (?,?,?);`, 
-    [new String(devicePubKeyValue), new Time(timestampValue.toString()), new Int64(10000), new Float64(readingValue)]);
-  
+    `INSERT INTO "sensor_data" (device_id,timestamp,sensor_reading) VALUES (?,?,?);`,
+    [
+      new String(devicePubKeyValue),
+      new Time(timestampValue.toString()),
+      new Int64(10000),
+      new Float64(readingValue),
+    ]
+  );
+
   // If using less than 2Wh, mint 1 token to the recipient
   if (readingValue <= 2) {
     Log("Minting 10 token to recipient...");
     mintRewards(TokenContractAddress, RecipientAddress, "8AC7230489E80000");
-  } else if (readingValue <= 5){
+  } else if (readingValue <= 5) {
     Log("Minting 4 token to recipient...");
     mintRewards(TokenContractAddress, RecipientAddress, "3782DACE9D900000");
   } else {
-    Log("Consumption too high, no rewards deserved.")
+    Log("Consumption too high, no rewards deserved.");
   }
-    return 0;
+  return 0;
 }
-
