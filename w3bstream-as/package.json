@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "node tests",
+    "test": "asp --verbose",
     "asbuild:release": "asc assembly/index.ts --target release",
     "asbuild": "npm run asbuild:release",
     "start": "npx serve ."
