@@ -3,6 +3,7 @@ import { Log, GetDataByRID, JSON } from "@w3bstream/wasm-sdk";
 export { alloc } from "@w3bstream/wasm-sdk";
 
 import { mintRewards } from "./rewards/mint-rewards";
+import { getField, getPayloadValue } from "./utils/payload-parser";
 
 const RECIPIENT_ADDR = "0x36f075ef0437b5fe95a7d0293823f1e085416ddf";
 const TOKEN_CONTRACT_ADDR = "0x0da8d9FBb86120f74af886265c51b98B1BeAE395";
@@ -11,12 +12,17 @@ const TOKEN_CONTRACT_ADDR = "0x0da8d9FBb86120f74af886265c51b98B1BeAE395";
 export function start(rid: i32): i32 {
   logOnCall();
 
-  const payload = getPayload(rid);
-  const data = extractDataFromPayload(payload);
+  const message = getMessage(rid);
+  const payload = getPayloadValue(message);
+  const data = getField<JSON.Obj>(payload, "data");
+
+  if (data == null) {
+    return 1;
+  }
 
   const device_pub_key = getPublicKey(payload);
-  const reading = getSensorReading(data);
-  const timestamp = getTimestamp(data);
+  const reading = getField<JSON.Float>(data, "sensor_reading");
+  const timestamp = getField<JSON.Integer>(data, "timestamp");
 
   if (validateMessage(device_pub_key, reading, timestamp) == 1) {
     return 1;
@@ -37,26 +43,6 @@ function getMessage(rid: i32): string {
 function logOnCall(): void {
   Log("start() called");
   Log("TokenContractAddress: " + TOKEN_CONTRACT_ADDR);
-}
-
-function getPayload(rid: i32): JSON.Obj {
-  const message = getMessage(rid);
-  return JSON.parse(message) as JSON.Obj;
-}
-
-function extractDataFromPayload(payload: JSON.Obj): JSON.Obj {
-  const data = payload.getObj("data") as JSON.Obj;
-  Log("data: " + data.toString());
-
-  return data;
-}
-
-function getSensorReading(data: JSON.Obj): JSON.Float | null {
-  return data.getFloat("sensor_reading");
-}
-
-function getTimestamp(data: JSON.Obj): JSON.Integer | null {
-  return data.getInteger("timestamp");
 }
 
 function getPublicKey(payload: JSON.Obj): JSON.Str | null {
