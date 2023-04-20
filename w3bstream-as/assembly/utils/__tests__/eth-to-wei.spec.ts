@@ -22,10 +22,10 @@ test("Test utils", () => {
       expect<string>(ethToWei("1.1")).toBe("1100000000000000000");
       expect<string>(ethToWei("1.01")).toBe("1010000000000000000");
       expect<string>(ethToWei("1.0001")).toBe("1000100000000000000");
+      expect<string>(ethToWei("1.00001")).toBe("1000010000000000000");
     });
     xit("should parse with high precision", () => {
       expect<string>(ethToWei("1.001")).toBe("1001000000000000000");
-      expect<string>(ethToWei("1.00001")).toBe("1000010000000000000");
     });
     itThrows(
       "should throw if value is not a number",
