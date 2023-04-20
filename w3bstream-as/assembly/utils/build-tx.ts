@@ -1,6 +1,6 @@
 import { tokenNumberToHex } from "./wei-to-hex";
 
-export function buildTx(
+export function buildTxData(
   functionAddr: string,
   recipient: string,
   tokenAmount: string
