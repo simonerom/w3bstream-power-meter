@@ -1,10 +1,9 @@
-import { Log, GetDataByRID, SendTx, JSON } from "@w3bstream/wasm-sdk";
+import { Log, GetDataByRID, JSON } from "@w3bstream/wasm-sdk";
 
 export { alloc } from "@w3bstream/wasm-sdk";
 
-import { buildTx } from "./utils/build-tx";
+import { mintRewards } from "./rewards/mint-rewards";
 
-const FUNCTION_ADDR = "40c10f19";
 const RECIPIENT_ADDR = "0x36f075ef0437b5fe95a7d0293823f1e085416ddf";
 const TOKEN_CONTRACT_ADDR = "0x0da8d9FBb86120f74af886265c51b98B1BeAE395";
 
@@ -26,19 +25,6 @@ export function start(rid: i32): i32 {
   evaluateConsumtionAndMintRewards(reading!);
 
   return 0;
-}
-
-export function mintRewards(
-  tokenContract: string,
-  recipient: string,
-  tokenAmount: string
-): void {
-  Log(`Minting ${tokenAmount} token to ${recipient}...`);
-
-  const data = buildTx(FUNCTION_ADDR, recipient, tokenAmount);
-
-  const res = SendTx(4690, tokenContract, "0", data);
-  Log("Send tx result:" + res);
 }
 
 function getMessage(rid: i32): string {
