@@ -63,7 +63,7 @@ The Raspberry Pi is connected to an ST7735-based TFT display (160x320 pixels), w
 ## The connections
 The image below shows how I connected the sensor and the display to the Raspberry Pi:
 
-![image](https://github.com/simonerom/w3bstream-power-meter/assets/11096047/9db7859c-e3d1-44b9-9471-543181299078)
+<img width="1880" alt="image" src="https://github.com/simonerom/w3bstream-power-meter/assets/11096047/536504ee-9969-474d-a153-82c99f15abaf">
 
 
 # The device firmware
