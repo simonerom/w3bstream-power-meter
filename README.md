@@ -60,9 +60,6 @@ For the actual device, I've used a Raspberry Pi 3b, for which there is a W3bstre
 
 The Raspberry Pi is connected to an ST7735-based TFT display (160x320 pixels), where I want to show the real-time power consumption and the corresponding blockchain rewards that the user will receive based on the current consumption (the lower the consumption, the more the rewards).
 
-![image](https://github.com/simonerom/w3bstream-power-meter/assets/11096047/b7d6659f-53df-4d8e-8e9b-98fb467e4874)
-
-
 ## The connections
 The image below shows how I connected the sensor and the display to the Raspberry Pi:
 
