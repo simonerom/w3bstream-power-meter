@@ -69,6 +69,12 @@ The image below shows how I connected the sensor and the display to the Raspberr
 # The device firmware
 On the software side, this device uses the W3bstream IoT SDK power-meter example to create a device identity in the form pf a public/private key pair that is stored on the Raspberry Pi. Unfortunately the Raspberry Pi does not provide any hardware secure element to securely generate and store private keys: once more boards will be supported by the SDK, these elements can be used to make the device identity more secure.  
 
+## Hardware used
+
+- Raspberry Pi. Any model should work, including the Raspberry Pi Zero W.  
+- Display: [Adafruit ST7735 1.8" 160x128 display breakout](https://www.adafruit.com/product/358) . Any ST7735 based breakout board should work.  
+- Current sensor: [Adafruit INA219 breakout](https://www.adafruit.com/product/904). Any INA219 based breakout board should work.  
+
 ## Configure Raspberry Pi Network
 Put wpa_supplicant.conf into /boot with the content below (edit based on your real location and network settings):
 
