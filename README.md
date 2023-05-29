@@ -118,8 +118,8 @@ To download the project files, follow these steps:
 3. Run the following script to ensure that all the necessary packages and libraries are installed on your Raspberry Pi:
 
 ```bash
-git clone [ repo url ]
-cd raspberry_pi
+git clone https://github.com/machinefi/w3bstream-examples.git
+cd w3bstream-examples/simple-smart-grid/raspberry_pi
 ./install-requirements.sh
 ```
 
